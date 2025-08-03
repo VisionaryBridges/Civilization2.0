@@ -1,0 +1,56 @@
+cd core/identity
+
+cat > package.json << 'EOF'
+{
+  "name": "@vbos/identity",
+  "version": "0.1.0",
+  "description": "VBOS Decentralized Identity Management",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "did-resolver": "^4.0.0",
+    "ethr-did-resolver": "^8.0.0",
+    "@veramo/core": "^4.0.0",
+    "@veramo/credential-w3c": "^4.0.0",
+    "uuid": "^9.0.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^9.0.0",
+    "typescript": "^5.0.0",
+    "ts-node-dev": "^2.0.0"
+  }
+}
+EOF
+
+cat > tsconfig.json << 'EOF'
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}
+EOF
+
+mkdir -p src
+
+# Create identity types and manager files
+# (The previous identity implementation would go here)
+
+cat > src/index.ts << 'EOF'
+export * from './types';
+export * from './identity-manager';
+EOF
+
+cd ../..
